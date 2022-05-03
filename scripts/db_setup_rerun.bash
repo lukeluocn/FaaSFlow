@@ -19,13 +19,19 @@ set -e
 
 # install and initialize couchdb
 # docker pull couchdb
+docker stop couchdb || true
 docker rm couchdb || true
 docker run -itd -p 5984:5984 -e COUCHDB_USER=openwhisk -e COUCHDB_PASSWORD=openwhisk --name couchdb couchdb
+sleep 3
+docker exec -it couchdb /bin/bash -c \
+    "sed '/^\[httpd\].*/a server_options = [{backlog, 128}, {acceptor_pool_size, 16}, {max, 4096}]' -i /opt/couchdb/etc/local.ini"
+docker exec -it couchdb /bin/bash -c "curl -X POST http://openwhisk:openwhisk@localhost:5984/_node/_local/_config/_reload"
 # pip3 install -r requirements.txt
 python3 couchdb_starter.py
 
 # install redis
 # docker pull redis
+docker stop redis || true
 docker rm redis || true
 docker run -itd -p 6379:6379 --name redis redis
 
