@@ -30,17 +30,17 @@ def run_workflow(workflow_name, request_id):
 
 def analyze_workflow(workflow_name, mode):
     global e2e_dict
-    total = 0
-    start = time.time()
-    e2e_total = 0
-    timeout = 0
+    total = 0               # luke: repeat at least 3 times
+    start = time.time()     # luke: or repeat unless the time limit is reached
+    e2e_total = 0           # luke: the accumulated e2e latency
+    timeout = 0             # luke: don't retry after 5 timeouts
     LIMIT = TEST_PER_WORKFLOW if mode == 'single' else TEST_CORUN
     while timeout < 5 and (total < 3 or time.time() - start <= LIMIT):
         total += 1
         id = str(uuid.uuid4())
         print(f'----firing workflow {workflow_name}----', id)
         e2e_latency = run_workflow(workflow_name, id)
-        if total > 2:
+        if total > 2:  # luke: the first 2 runs are not counted
             if e2e_latency > 100:
                 total = total - 1
                 timeout = timeout + 1
@@ -51,15 +51,14 @@ def analyze_workflow(workflow_name, mode):
         print(f'{workflow_name} e2e_latency: timeout')
         e2e_dict[workflow_name] = 'timeout'
     else:
-        e2e_latency = e2e_total / (total - 2)
+        e2e_latency = e2e_total / (total - 2)  # luke: the first 2 runs are not counted
         print(f'{workflow_name} e2e_latency: ', e2e_latency)
         e2e_dict[workflow_name] = e2e_latency
 
 def analyze(mode, datamode):
     global e2e_dict
-    workflow_pool = ['cycles', 'epigenomics', 'genome', 'soykb', 'video', 'illgal_recognizer', 'fileprocessing', 'wordcount']
-    # workflow_pool = ['cycles', 'epigenomics', 'genome', 'soykb']
-    # workflow_pool = ['soykb']
+    # workflow_pool = ['cycles', 'epigenomics', 'genome', 'soykb', 'video', 'illgal_recognizer', 'fileprocessing', 'wordcount']
+    workflow_pool = ['wordcount']
     if mode == 'single':
         for workflow in workflow_pool:
             analyze_workflow(workflow, mode)
