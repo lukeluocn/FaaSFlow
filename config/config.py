@@ -1,17 +1,17 @@
-COUCHDB_URL = 'http://openwhisk:openwhisk@10.2.64.8:5984/'
+COUCHDB_URL = 'http://openwhisk:openwhisk@192.168.1.54:5984/'
 REDIS_HOST = '127.0.0.1' # it serves to connect with the local redis, so it should be 127.0.0.1
 REDIS_PORT = 6379 # it follows the same configuration as created redis by docker (e.g., -p 6379:6379)
 REDIS_DB = 0
-GATEWAY_ADDR = '10.2.64.8:7000' # need to update as your private_ip
-MASTER_HOST = '10.2.64.8:8000' # need to update as your private_ip
-WORKFLOW_YAML_ADDR = {'fileprocessing': '/home/openwhisk/Workflow/benchmark/fileprocessing/flat_workflow.yaml',
-                  'illgal_recognizer': '/home/openwhisk/Workflow/benchmark/illgal_recognizer/flat_workflow.yaml',
-                  'video': '/home/openwhisk/Workflow/benchmark/video/flat_workflow.yaml',
-                  'wordcount': '/home/openwhisk/Workflow/benchmark/wordcount/flat_workflow.yaml',
-                  'cycles': '/home/openwhisk/Workflow/benchmark/generator/cycles/flat_workflow.yaml',
-                  'epigenomics': '/home/openwhisk/Workflow/benchmark/generator/epigenomics/flat_workflow.yaml',
-                  'genome': '/home/openwhisk/Workflow/benchmark/generator/genome/flat_workflow.yaml',
-                  'soykb': '/home/openwhisk/Workflow/benchmark/generator/soykb/flat_workflow.yaml'}
+GATEWAY_ADDR = '192.168.1.54:7000' # need to update as your private_ip
+MASTER_HOST = '192.168.1.54:8000' # need to update as your private_ip
+WORKFLOW_YAML_ADDR = {'fileprocessing': '/home/smc/FaaSFlow/benchmark/fileprocessing/flat_workflow.yaml',
+                  'illgal_recognizer': '/home/smc/FaaSFlow/benchmark/illgal_recognizer/flat_workflow.yaml',
+                  'video': '/home/smc/FaaSFlow/benchmark/video/flat_workflow.yaml',
+                  'wordcount': '/home/smc/FaaSFlow/benchmark/wordcount/flat_workflow.yaml',
+                  'cycles': '/home/smc/FaaSFlow/benchmark/generator/cycles/flat_workflow.yaml',
+                  'epigenomics': '/home/smc/FaaSFlow/benchmark/generator/epigenomics/flat_workflow.yaml',
+                  'genome': '/home/smc/FaaSFlow/benchmark/generator/genome/flat_workflow.yaml',
+                  'soykb': '/home/smc/FaaSFlow/benchmark/generator/soykb/flat_workflow.yaml'}
 NETWORK_BANDWIDTH = 25 * 1024 * 1024 / 4 # 25MB/s / 4
 NET_MEM_BANDWIDTH_RATIO = 15 # mem_time = net_time / 15
 CONTAINER_MEM = 256 * 1024 * 1024 # 256MB
@@ -24,6 +24,6 @@ FUNCTION_INFO_ADDRS = {'genome': '../../benchmark/generator/genome', 'epigenomic
                                                 'soykb': '../../benchmark/generator/soykb', 'cycles': '../../benchmark/generator/cycles',
                                                 'fileprocessing': '../../benchmark/fileprocessing', 'wordcount': '../../benchmark/wordcount',
                                                 'illgal_recognizer': '../../benchmark/illgal_recognizer', 'video': '../../benchmark/video'}
-DATA_MODE = 'raw' # raw, optimized
+DATA_MODE = 'optimized' # raw, optimized
 CONTROL_MODE = 'WorkerSP' # WorkerSP, MasterSP
 CLEAR_DB_AND_MEM = True
