@@ -19,8 +19,8 @@ set -e
 
 # install and initialize couchdb
 # docker pull couchdb
-docker stop couchdb || true
-docker rm couchdb || true
+docker rm --force $(docker ps -q)
+
 docker run -itd -p 5984:5984 -e COUCHDB_USER=openwhisk -e COUCHDB_PASSWORD=openwhisk --name couchdb couchdb
 sleep 3
 docker exec -it couchdb /bin/bash -c \
@@ -31,8 +31,6 @@ python3 couchdb_starter.py
 
 # install redis
 # docker pull redis
-docker stop redis || true
-docker rm redis || true
 docker run -itd -p 6379:6379 --name redis redis
 
 # run grouping for all benchmarks

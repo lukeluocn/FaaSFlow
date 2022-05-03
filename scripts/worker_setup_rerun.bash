@@ -17,8 +17,8 @@
 
 # install redis
 # docker pull redis
-docker stop redis || true
-docker rm redis || true
+docker rm --force $(docker ps -q)
+
 docker run -itd -p 6379:6379 --name redis redis
 
 # build docker images
