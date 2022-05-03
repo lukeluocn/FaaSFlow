@@ -19,7 +19,7 @@ set -e
 
 # install and initialize couchdb
 # docker pull couchdb
-docker rm --force $(docker ps -q)
+docker rm --force $(docker ps -q) || true
 
 docker run -itd -p 5984:5984 -e COUCHDB_USER=openwhisk -e COUCHDB_PASSWORD=openwhisk --name couchdb couchdb
 sleep 3
