@@ -1,5 +1,7 @@
 import gevent
-import docker
+import sys
+sys.path.append("..")
+import mydocker
 import os
 from function_info import parse
 from port_controller import PortController
@@ -15,7 +17,7 @@ class FunctionManager:
         self.function_info = parse(config_path)
 
         self.port_controller = PortController(min_port, min_port + 4999)
-        self.client = docker.from_env()
+        self.client = mydocker.from_env()
 
         self.functions = {
             x.function_name: Function(self.client, x, self.port_controller)

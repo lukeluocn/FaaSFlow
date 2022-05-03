@@ -1,8 +1,6 @@
 import requests
-import docker
 import time
 import gevent
-from docker.types import Mount
 
 base_url = 'http://127.0.0.1:{}/{}'
 
